@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{from} \PYG{n+nn}{matplotlib} \PYG{k+kn}{import} \PYG{n}{pyplot} \PYG{k}{as} \PYG{n}{plt}
+\PYG{k+kn}{from} \PYG{n+nn}{scipy.optimize} \PYG{k+kn}{import} \PYG{n}{curve\PYGZus{}fit}
+
+
+\PYG{k}{def} \PYG{n+nf}{catenary}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{a}\PYG{p}{,} \PYG{n}{c}\PYG{p}{,} \PYG{n}{x0}\PYG{p}{):}
+    \PYG{k}{return} \PYG{n}{c} \PYG{o}{+} \PYG{n}{a} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{cosh}\PYG{p}{((}\PYG{n}{x} \PYG{o}{\PYGZhy{}} \PYG{n}{x0}\PYG{p}{)} \PYG{o}{/} \PYG{n}{a}\PYG{p}{)}
+
+
+\PYG{n}{file\PYGZus{}path} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}dataset\PYGZus{}catenaria.csv\PYGZdq{}}
+\PYG{n}{x}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{file\PYGZus{}path}\PYG{p}{,} \PYG{n}{delimiter}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{};\PYGZsq{}}\PYG{p}{,}
+\PYG{n}{comments}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZsh{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{unpack}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+
+\PYG{n}{sigma\PYGZus{}y} \PYG{o}{=} \PYG{l+m+mf}{0.12}  \PYG{c+c1}{\PYGZsh{} cm}
+
+\PYG{n}{fig} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Fit e residui\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{add\PYGZus{}axes}\PYG{p}{((}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.3}\PYG{p}{,} \PYG{l+m+mf}{0.8}\PYG{p}{,} \PYG{l+m+mf}{0.6}\PYG{p}{))}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}y}\PYG{p}{,} \PYG{n}{fmt}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}o\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{)}
+
+\PYG{n}{popt}\PYG{p}{,} \PYG{n}{pcov} \PYG{o}{=} \PYG{n}{curve\PYGZus{}fit}\PYG{p}{(}\PYG{n}{catenary}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+\PYG{n}{a\PYGZus{}hat}\PYG{p}{,} \PYG{n}{c\PYGZus{}hat}\PYG{p}{,} \PYG{n}{x0\PYGZus{}hat} \PYG{o}{=} \PYG{n}{popt}
+\PYG{n}{sigma\PYGZus{}a}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}c}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}x0} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{pcov}\PYG{o}{.}\PYG{n}{diagonal}\PYG{p}{())}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{a\PYGZus{}hat}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}a}\PYG{p}{,} \PYG{n}{c\PYGZus{}hat}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}c}\PYG{p}{,} \PYG{n}{x0\PYGZus{}hat}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}x0}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{catenary}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{a\PYGZus{}hat}\PYG{p}{,} \PYG{n}{c\PYGZus{}hat}\PYG{p}{,} \PYG{n}{x0\PYGZus{}hat}\PYG{p}{))}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{n}{which}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}both\PYGZdq{}}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}dashed\PYGZdq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}gray\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}y [cm]\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{add\PYGZus{}axes}\PYG{p}{((}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.8}\PYG{p}{,} \PYG{l+m+mf}{0.2}\PYG{p}{),} \PYG{n}{ylim}\PYG{o}{=}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.75}\PYG{p}{,} \PYG{l+m+mf}{0.75}\PYG{p}{))}
+\PYG{n}{res} \PYG{o}{=} \PYG{n}{y} \PYG{o}{\PYGZhy{}} \PYG{n}{catenary}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{a\PYGZus{}hat}\PYG{p}{,} \PYG{n}{c\PYGZus{}hat}\PYG{p}{,} \PYG{n}{x0\PYGZus{}hat}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{res}\PYG{p}{,} \PYG{n}{sigma\PYGZus{}y}\PYG{p}{,} \PYG{n}{fmt}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}o\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{n}{which}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}both\PYGZdq{}}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}dashed\PYGZdq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}gray\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}x [cm]\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Residuai\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}catenaria.pdf\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

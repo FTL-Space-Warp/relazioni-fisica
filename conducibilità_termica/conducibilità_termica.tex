@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath} % extra math environments
+\usepackage{graphicx} % add figures 
+\usepackage{subcaption} % add subfigures
+\usepackage{hyperref} % add hypertext links
+\usepackage{minted} % add code snippets
+\usepackage{siunitx} % SI units formatting
+
+\title{Relazione di Laboratorio 4 - Conducibilità Termica}
+\author{Iallorenzi Michele - Walhout Francesco}
+
+% Color setup for hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    urlcolor=blue
+    }
+
+\begin{document}
+    \maketitle
+
+    \section{Introduzione}
+    La \emph{conducibilità termica} è una grandezza fisica che misura la
+    rapidità con cui il calore viene trasferito da una determinata sostanza per
+    conduzione termica.\\
+    Vogliamo misurare la conducibilità termica di alcuni materiali,
+    per farlo utilizziamo un apparato sperimentale che consiste in due barre cilindriche
+    di alluminio e rame, riscaldate ad un estremità da una resistenza e raffreddate 
+    all'altra da dell'acqua corrente.
+    Misureremo quindi la temperatura in vari punti dei cilindri e la compareremo con
+    quella predetta della teoria, per poi calcolare una misura indiretta della 
+    conducibilità termica.
+    \subsection{Strumenti utilizzati}
+    \begin{itemize}
+        \item Due barre cilindriche di metalli diversi
+        \item Due resistenze connesse in parallelo ad un alimentatore
+        \item Un circuito di acqua corrente
+        \item Due termoresistenze connesse ad un computer per l'acquisizione dei dati
+    \end{itemize}
+    \section{Misure ed Analisi}
+    Per facilitare la presa dati, le barre metalliche hanno dei fori sul lato lungo,
+    equispaziati tra la fonte calda e quella fredda, in cui inserire le termoresistenze.\\
+    Per l'acquisizione dei dati abbiamo utilizzato il programma \href{https://pythonhosted.org/plasduino/index.html}{plasduino},
+    che fornisce file di testo contenenti le temperature misurate dai due resistori
+    ad intervalli di tempo regolari. Abbiamo quindi inserito le termoresistenze e 
+    avviato l'acquisizione dei dati simultaneamente per ciascun foro in modo
+    da poter osservare il grafico della temperatura in funzione del tempo,
+    oltre che la temperatura finale misurata.
+    \section{Elaborazione dei dati}
+    \section{Conclusioni}
+
+\end{document}
