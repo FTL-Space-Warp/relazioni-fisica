@@ -6,3 +6,4 @@
 *.synctex.gz
 _minted-*/
 *.swp
+.DS_Store
