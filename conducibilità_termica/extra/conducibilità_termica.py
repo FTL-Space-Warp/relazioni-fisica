@@ -9,8 +9,13 @@ T1r = np.loadtxt("temperature-WI/misura1.txt", usecols=1)
 t1a = np.loadtxt("temperature-WI/misura1.txt", usecols=2)
 T1a = np.loadtxt("temperature-WI/misura1.txt", usecols=3)
 
+# Misure utilizzate per il calcolo dell'incertezza delle termoresistenze
+t_sample = np.loadtxt("temperature-WI/misura9.txt", usecols=0)[66:]
+T_sample = np.loadtxt("temperature-WI/misura9.txt", usecols=1)[66:]
+
 
 def temp(x, T0, k):
+    ''' Funzione utilizzata per il fit delle temperature '''
     return T0 + k*x
 
 
@@ -19,10 +24,10 @@ xr = np.array([45.5, 41.3, 39.2, 37.1, 34.9, 32.8, 30.6, 28.5, 26.3, 24.2, 22,
                19.8, 17.7, 15.6, 13.4, 11.3, 9.2, 7, 4.8, 2.7])
 xa = np.array([38, 35.5, 33, 30.5, 28, 25.5, 23, 20.5, 18, 15.5, 13, 10.5, 8,
                5.5, 3])
-sigma_x = 0.01
 Tr = []
 Ta = []
-sigma_T = 0.4
+sigma_T = np.std(T_sample)
+print(sigma_T)
 for i in range(20):
     Tr.append(np.loadtxt("temperature-WI/misura"+str(i+1)+".txt",
                          usecols=1)[-1])
@@ -46,25 +51,27 @@ plt.savefig("prima_misura.pdf")
 
 temperature = plt.figure("Temperature")
 temperature.add_axes((0.1, 0.3, 0.8, 0.6))
-plt.errorbar(xr, Tr, yerr=sigma_T, xerr=sigma_x, fmt=".", c="red")
-plt.errorbar(xa, Ta, yerr=sigma_T, xerr=sigma_x, fmt=".", c="blue")
+plt.errorbar(xr, Tr, yerr=sigma_T, fmt=".",
+             markersize=4, c="red")
+plt.errorbar(xa, Ta, yerr=sigma_T, fmt=".",
+             markersize=4, c="blue")
 
 # Fit delle temperature
 popt_r, pcov = curve_fit(temp, xr, Tr)
 T0r_hat, kr_hat = popt_r
 chisq_r = np.sum(((temp(xr, *popt_r) - Tr)/sigma_T)**2)
-plt.plot(xr, temp(xr, *popt_r), c="red", label="Rame")
+plt.plot(xr, temp(xr, *popt_r), 'r', label="Rame")
 print("# Rame")
 print("sigma_T0 = %f\nsigma_k = %f" % tuple(np.sqrt(np.diag(pcov))))
-print(f"chisq = {chisq_r}")
+print(f"chisq = {chisq_r} / 20")
 
 popt_a, pcov = curve_fit(temp, xa, Ta)
 T0a_hat, ka_hat = popt_a
 chisq_a = np.sum(((temp(xa, *popt_a) - Ta)/sigma_T)**2)
-plt.plot(xa, temp(xa, *popt_a), c="blue", label="Alluminio")
+plt.plot(xa, temp(xa, *popt_a), 'b', label="Alluminio")
 print("# Alluminio")
 print("sigma_T0 = %f\nsigma_k = %f" % tuple(np.sqrt(np.diag(pcov))))
-print(f"chisq = {chisq_a}")
+print(f"chisq = {chisq_a} / 15")
 
 plt.grid(which='both', ls='dashed', color='gray')
 plt.xlabel('x [cm]')
@@ -76,14 +83,14 @@ plt.legend()
 temperature.add_axes((0.1, 0.1, 0.8, 0.2))
 
 res_r = Tr - temp(xr, *popt_r)
-plt.errorbar(xr, res_r, sigma_T, fmt="o", markersize=4, c="red")
+plt.errorbar(xr, res_r, sigma_T, fmt=".", markersize=4, c="red")
 
 res_a = Ta - temp(xa, *popt_a)
-plt.errorbar(xa, res_a, sigma_T, fmt="o", markersize=4, c="blue")
+plt.errorbar(xa, res_a, sigma_T, fmt=".", markersize=4, c="blue")
 
 plt.grid(which="both", ls="dashed", color="gray")
 plt.xlabel("x [cm]")
-plt.ylabel("Residuai")
+plt.ylabel("Residui")
 
 plt.savefig("temperature.pdf")
 

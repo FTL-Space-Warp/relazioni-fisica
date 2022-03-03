@@ -67,7 +67,7 @@ bottom=3cm
     Si nota subito che la temperatura segue una legge di potenza, come ci si può aspettare
     dalla teoria. Abbiamo manualmente interrotto la registrazione delle misure quando la
     temperatura delle termoresistenze si è stabilizzata, e abbiamo ripetuto l'operazione
-    per ciascun foro.
+    per ciascun foro, prendendo l'ultima temperatura registrata come dato.
     Infine abbiamo preso nota del diametro $d$ delle barre che risulta valere 
     , del voltaggio $V$ e della corrente $I$ passante per le resistenze,
     i valori ottenuti sono:
@@ -77,6 +77,15 @@ bottom=3cm
         \item $I=\SI{1.0(1)}{\ampere}$
     \end{itemize}
     \section{Elaborazione dei dati}
+    Come prima cosa abbiamo scelto manualmente tra le nostre misurazioni un intervallo
+    di tempo in cui le termoresistenze hanno effettuato ripetute misurazioni di una
+    temperatura costante (come avviene nell'ultimo intervallo del grafico
+    \ref{fig:prima_misura}) e abbiamo utilizzato questi dati per calcolare una stima $s$
+    della deviazione standard  delle temperature, utilizzando la formula:
+    \begin{equation}
+        s=\sqrt{\frac{\sum_{i=1}^{n} \left( T_i-m \right) ^2}{n}} 
+    \end{equation}
+    dove $m$ è la media campione delle misure  $T_i$. Il valore ottenuto è $s=\SI{0.087}{\celsius}$
     I dati ricavati sono riportati nel grafico in figura \ref{fig:temperature}, in cui le temperature sono
     mostrate in funzione della distanza dalla fonte fredda.\\
     \begin{figure}[t]
@@ -116,5 +125,13 @@ bottom=3cm
     \end{equation}
 
     \section{Conclusioni}
-
+    Osservando il grafico dei residui, si nota che i valori arrivano a distaccarsi dallo
+    zero per più di $5\sigma$, questo può significare che alcune delle supposizioni su
+    cui ci siamo basati non sono accettabili, ad esempio è possibile che le perdite di
+    calore con l'ambiente non siano trascurabili e che quindi il modello dell'equazione
+    \ref{eq:T_i} non sia adatto a descrivere i dati ottenuti.
+    In alternativa è possibile che l'incertezza degli strumenti utilizzati sia maggiore
+    di quella che abbiamo ricavato all'inizio dell'elaborazione dati, e che quindi
+    il procedimento sia valido ma l'incertezza associata al valore ricavato per $\lambda$
+    sia troppo piccola.
 \end{document}
