@@ -1,0 +1,6 @@
+import numpy
+import csv
+
+with open("test.csv", "r") as file:
+    reader = csv.reader(file)
+    
