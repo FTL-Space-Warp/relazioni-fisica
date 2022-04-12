@@ -1,0 +1,3 @@
+#PRISMA ESAGONALE					
+#Spessore 1	Spessore 2	Spessore 3	Altezza	massa [g]
+9.96	9.96	9.94	22.75	16.42

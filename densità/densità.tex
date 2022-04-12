@@ -8,7 +8,7 @@
 \usepackage{minted} % add code snippets
 \usepackage{siunitx} % SI units formatting
 
-\title{Relazione di Laboratorio 1 - Catenaria}
+\title{Relazione di Laboratorio 1 - Misure di densità}
 \author{Iallorenzi Michele - Walhout Francesco}
 
 % Color setup for hyperref
@@ -23,12 +23,86 @@
     \maketitle
 
     \section{Introduzione}
+    Vogliamo misurare indirettamente le densità di alcuni materiali misurando le
+    dimensioni e le masse di alcuni cilindri, parallelepipedi, prismi e sfere fatti 
+    di questi materiali.
+    Supponendo che questi oggetti abbiano densità $\rho$ uniforme, essa si esprime
+    in funzione della massa $m$ e del volume $V$ come:
+    \begin{equation}
+        \rho = \frac{m}{V}
+        \label{eq:densità}
+    \end{equation}
     \subsection{Strumenti utilizzati}
     \begin{itemize}
-        \item 
+        \item 4 Cilindri, 3 parallelepipedi, un prisma a base esagonale e 5 
+            sfere di metalli vari
+        \item Un calibro cinquantesimale
+        \item Un micrometro con risoluzione di $\SI{0.01}{\mm}$ 
+        \item Una bilancia elettronica con risoluzione di $\SI{0.001}{\g}$
     \end{itemize}
-    \section{Misure ed Analisi}
+    \section{Misure}
+    Abbiamo misurato le dimensioni degli oggetti utilizzando dove possibile il micrometro,
+    e utilizzando il calibro cinquantesimale per le misure maggiori della massima grandezza
+    misurabile dal micrometro. In seguito abbiamo misurato le masse di ogni oggetto mediante
+    la bilancia. Nel caso del prisma a base esagonale abbiamo preso come misura del suo
+    spessore (ovvero del doppio dell'apotema di base) la media dei tre spessori misurabili
+    dalle tre coppie di facce opposte.\\
+    I dati così ottenuti sono riassunti nella tabella \ref{tab:dati}.
+    \begin{table}[h]
+        \centering
+        \subfloat[Cilindri]{
+        \begin{tabular}{ |c|c|c| } 
+            \hline
+            Diametro [mm] & Altezza [mm] & Massa [g]\\
+            \hline\hline
+            11.46	&18.83	&5.712\\
+            9.97	&16.68	&10.627\\
+            5.98	&19.29	&1.453\\
+            9.97	&37.7	&24.789\\
+            \hline
+        \end{tabular}}\\
+        \subfloat[Parallelepipedi]{
+        \begin{tabular}{ |c|c|c|c| }
+            \hline
+            Lato 1 [mm] & Lato 2 [mm] & Lato 3 [mm] & Massa [g]\\
+            \hline\hline
+            10.07	&17.94	&10.50	&4.861	\\
+            8.14	&20.03	&17.52	&7.659	\\
+            9.96	&9.98	&41.82	&34.986	 \\
+            \hline
+        \end{tabular}}\\
+        \subfloat[Prisma a base esagonale]{
+        \begin{tabular}{ |c|c|c|c|c! } 
+            \hline
+            Doppi apotemi [mm] & Altezza [mm]& Massa [g]\\
+            \hline\hline
+            9.96 & 22.75	&16.42\\
+            9.96&&\\
+            9.94&&\\
+            \hline
+        \end{tabular}}\\
+        \subfloat[Cilindri]{
+        \begin{tabular}{ |c|c|c| } 
+            \hline
+            Diametro [mm] & Altezza [mm] & Massa [g]\\
+            \hline\hline
+            11.46	&18.83	&5.712\\
+            9.97	&16.68	&10.627\\
+            5.98	&19.29	&1.453\\
+            9.97	&37.7	&24.789\\
+            \hline
+        \end{tabular}}
+        \caption{Misure delle dimensioni.}
+        \label{tab:dati}
+    \end{table}
+
     \section{Elaborazione dei dati}
+    Per prima cosa è necessario calcolare i valori centrali e le relative incertezze dei
+    volumi di ciascun oggetto per fare questo abbiamo usato le seguenti formule:\\
+    Per i cilindri:
+    Per i parallelepipedi:
+    Per il prisma a base esagonale:
+    Per le sfere:
     \section{Conclusioni}
 
 \end{document}
