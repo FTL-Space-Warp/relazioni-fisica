@@ -1,0 +1,5 @@
+#PARALLELEPIPEDI					
+#Lato 1 [mm]	Lato 2 [mm]	Lato 3 [mm]	massa [g]	
+10.07	17.94	10.50	4.861	
+8.14	20.03	17.52	7.659	
+9.96	9.98	41.82	34.986	
