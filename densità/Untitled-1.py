@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
 
-#Volume cilindro
+# Volume cilindro
 
 diametro_cilindo = np.loadtxt("cilindri.txt", usecols=0)
 altezza_cilindro = np.loadtxt("cilindri.txt", usecols=1)
@@ -17,7 +17,7 @@ V_cilindro = (diametro_cilindo / 2)**2 * np.pi * altezza_cilindro
 
 sigma_V_cilindro = np.sqrt((diametro_cilindo/2 * np.pi * altezza_cilindro * sigma_d_c)**2 + ((diametro_cilindo**2/2) * np.pi * sigma_h_c)**2)
 
-#Volume parallelepipedo
+# Volume parallelepipedo
 
 lato_1_parallelepipedo = np.loadtxt("parallelepipedo.txt", usecols=0)
 lato_2_parallelepipedo = np.loadtxt("parallelepipedo.txt", usecols=1)
@@ -32,7 +32,7 @@ V_parallelepipedo = lato_1_parallelepipedo * lato_2_parallelepipedo * lato_3_par
 
 sigma_V_parallelepipedo = np.sqrt((lato_2_parallelepipedo * lato_3_parallelepipedo * sigma_p1) + (lato_1_parallelepipedo * lato_3_parallelepipedo * sigma_p2) + (lato_1_parallelepipedo * lato_2_parallelepipedo * sigma_p3))
 
-#Volume prisma
+# Volume prisma
 
 apotema = 9.95/2 # Media delle tre facce dell'esagono
 altezza_prisma = np.loadtxt("prisma.txt", usecols=0)[0] 
@@ -46,7 +46,7 @@ V_esagono = 2 * sqrt(3) * (apotema**2)
 
 sigma_V_esagono = np.sprt((4*sqrt(3) * apotema * altezza_prisma * sigma_a) + (2*sqrt(3) * (apotema**2) * sigma_al_p))
 
-#Volume sfera
+# Volume sfera
 
 raggio_sfera = np.loadtxt("sfere.txt", usecol=0)
 massa_sfera = np.loadtxt("sfere.txt", usecol=1)

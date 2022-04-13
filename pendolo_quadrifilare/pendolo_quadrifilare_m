@@ -1,6 +1,19 @@
-import numpy
-import csv
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy.optimize import curve_fit
 
-with open("test.csv", "r") as file:
-    reader = csv.reader(file)
-    
+# Funzioni
+
+def angolo(v_0, g=9.81, l):
+    return np.arcocs(1 - ((v_0**2)/2*g*l))
+
+def periodo
+
+# Plot
+
+plt.figure("Grafico massa-volume")
+plt.errorbar#(Volume, massa, sigma_V, sigma_massa)
+popt, pcov = curve_fit#(retta, V_cilindro, massa_cilindro)
+m_hat, q_hat = popt
+sigma_m, sigma_q = np.sqrt(pcov.diagonal())
+print(m_hat, sigma_m, q_hat, sigma_q)
