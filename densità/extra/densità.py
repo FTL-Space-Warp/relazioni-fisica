@@ -79,8 +79,6 @@ massa = np.concatenate((massa_cilindro, massa_parallelepipedo, massa_prisma,
 
 sigma_massa = np.concatenate((sigma_m_c, sigma_m_pa, sigma_m_pr, sigma_m_s))
 
-print(Volume)
-print(len(Volume))
 
 # Funzione e legge di potenza
 
@@ -99,19 +97,12 @@ plt.figure("Grafico massa-volume")
 
 colori = ['blue', 'red', 'green']
 label = ['materiale 1', 'materiale 2', 'materiale 3']
-# Volume = np.array([V_cilindro, V_parallelepipedo, V_prisma, V_sfera],
-#                   dtype=object) / 1000  # converto a cm^3
-# sigma_V = [sigma_V_cilindro, sigma_V_parallelepipedo,
-#            sigma_V_prisma, sigma_V_sfera]
-# massa = [massa_cilindro, massa_parallelepipedo, massa_prisma, massa_sfera]
-# sigma_massa = [sigma_m_c, sigma_m_pa, sigma_m_pr, sigma_m_s]
 
 # bitmask per i materiali
 bits = np.array([2**x for x in range(len(Volume)-1, -1, -1)])
 materiali = np.array([(bits & 0b1111000100000) != 0,
                       (bits & 0b0000111000000) != 0,
                       (bits & 0b0000000011111) != 0])
-print(materiali)
 
 for i in range(len(materiali)):
     plt.errorbar(Volume[materiali[i]], massa[materiali[i]],
