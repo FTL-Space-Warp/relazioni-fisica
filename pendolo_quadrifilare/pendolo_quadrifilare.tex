@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Relazione di Laboratorio 1 - Pendolo Quadrifilare}
+\author{Iallorenzi Michele - Wallout Francesco}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+    L'esperimento verte sullo studio del moto del pendolo quadrifilare. Questo pendolo è composto da x fili che sorreggono un pezzo di legno. Questi servono per mantenere il pendolo stabile, in modo che faccia le sue oscillazioni su un piano. Inoltre possiamo ...
+    Lo scopo dell'esperienza è studiare i moti del pendolo quando non siamo nel regime delle piccole oscillazioni, cercando di capire come varia il periodo del pendolo in funzione dell'angolo di oscillazione.
+    
+\section{Esperienza}
+
+    \subsection{Strumenti}
+    \begin{itemize}
+        \item Pendolo Quadrifilare
+        \item Cronometro
+        \item Fotocellula (per contare le oscillazioni e la velocità istantanea)
+    \end{itemize}
+    
+    \subsection{Misurazione}
+    Posizionare il grave ad un ampiezza abbastanza grande per permettere al pendolo di oscillare il più a lungo possibile, facendo selle oscillazioni uniformi. Appena parte il moto del pendolo, bisogna far partire il cronometro ed aspettare che la "bandiera" del pendolo (che serve a registrare la velocità ed il numero delle oscillazioni) non registri più nessun oscillazione.
+    
+    \subsection{Calcoli}
+    Per calcolare l'ampiezza delle oscillazioni, assumiamo trascurabile l'attrito con l'aria e ricaviamoci la relazione energetica fondamentale:
+    \begin{equation}
+        mgl(1-cos\theta_0) = \frac{1}{2}m v_0^2
+    \end{equation}
+    ovvero che l'energia potenziale nel punto di massima altezza è la stessa energia (cinetica) nel punto di massima velocità. Si ricava che:
+    \begin{equation}
+        \theta_0 = arccos(1 -\frac{v_0^2}{2gl})
+    \end{equation}.
+    Una volta ottenuto l'angolo, bisogna inserirlo nell'equazione del periodo del pendolo, che si può sviluppare secondo un espansione del seno:
+    \begin{equation}\label{T}
+        T = 2 \pi \sqrt{\frac{l}{g}}(1 + \frac{1}{16}\theta_0^2 + \frac{11}{3072}\theta_0^2
+    \end{equation}.
+    Nel codice abbiamo inserito solamente il primo sviluppo ($\frac{1}{16}\theta_0^2$), cercando di fare un fit con una "sorta di parabola" (un po' più schiacciata rispetto alla classica $y=x^2$), ma quanti sviluppi ci servono per fare il fit e quanti se ne possono studiare? Se l'incertezza che viene misurata ad un determinato sviluppo $n$, è più piccola dell'incertezza misurata in quello sviluppo, allora si può dire che è sufficiente studiare la funzione T (nell'equazione \ref{T}) allo sviluppo $n$-esimo.
+    ...
+    Sappiamo che la velocità di un qualsiasi pendolo reale, diminuisce nel tempo, quindi presenta uno smorzamento esponenziale secondo questa funzione:
+    \begin{equation}
+        v(t) = v_0(0) e^{-\lambda t}
+    \end{equation}.
+    Più avanti vedremo come calcolare il tempo di smorzamento $\tau = \frac{1}{\lambda}$
+    
+\section{Elaborazione dei dati}
+    
+    \subsection{Grafico}
+    Il grafico della funzione velocità, considerando il parametro velocità iniziale, si descrive attraverso una curva esponenziale. Facendo un fit con le misure prese in laboratorio, abbiamo ottenuto questo grafico:
+    ...
+    Il $\chi^2$ di questo grafico è ...
+    
+    Il modello del periodo, in funzione dell'angolo di oscillazione, verrebbe una parabola del secondo grado (in accordo con le considerazioni sull'ordine degli sviluppi del seno). Il risultato è:
+    ...
+    
+\section{Conclusioni}
+
+\end{document}
