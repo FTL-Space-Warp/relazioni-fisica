@@ -9,6 +9,8 @@
 \usepackage{float}
 \usepackage{amsmath, amssymb}
 
+\sisetup{uncertainty-mode=separate}
+
 \title{Relazione di Laboratorio 3 - Rimbalzi}
 \author{Walhout Francesco - Iallorenzi Michele}
 
@@ -100,7 +102,7 @@
     e ignorando quindi l'attrito dell'aria ed altre perturbazioni, si può dimostrare la
     seguente formula:
     \begin{equation}
-        \label{eq:altezza 2}
+        \label{eq:altezza_2}
         h_n=-\frac{1}{8}g\left( t_{n+1}-t_{n} \right) ^2
     \end{equation}
     che ci permette di calcolare le altezze a partire dai dati di cui disponiamo.\\
@@ -133,8 +135,8 @@
             \multicolumn{2}{c|}{Fit su 50 rimbalzi} & \multicolumn{2}{c}{Fit su 40 rimbalzi} \\
             \hline
             \hline
-            $h_0$ [\si{\m}] & 0.627 & $h_0$ [\si{\m}] & 0.116\\
-            $\sigma_{h_0} [\si{\m}]$ & 0.024 & $\sigma_{h_0} [\si{\m}]$ & 0.001\\
+            $h_0$ [\si{\m}] & 0.627 & $h_{10}$ [\si{\m}] & 0.116\\
+            $\sigma_{h_0} [\si{\m}]$ & 0.024 & $\sigma_{h_{10}} [\si{\m}]$ & 0.001\\
             $\gamma$ & 0.8634 & $\gamma$ & 0.8929\\
             $\sigma_{\gamma}$ & 0.0036 & $\sigma_{\gamma}$ & 0.0007
         \end{tabular}
@@ -148,12 +150,17 @@
     i dati si adattano molto bene al modello scelto. Per determinare, nel caso generale,
     quale sia un altezza iniziale sufficientemente bassa da rendere trascurabile l'errore
     commesso dal modello esponenziale sarebbe necessario studiare un modello più generale
-    che descriva più precisamente la perdita di energia della pallina e permetta quindi
-    di determinare l'errore commesso dal modello esponenziale.\\
-    Possiamo ipotizzare che le cause di questo errore siano la maggiore deformazione della
-    pallina causata dalla velocità degli urti e il maggiore attrito con l'aria a cui la 
-    pallina va incontro muovendosi a velocità maggiori lungo traiettorie più lunghe.\\
+    che descriva con maggiore precisione la perdita di energia della pallina e permetta
+    quindi di determinare l'errore commesso dal modello esponenziale.\\
+    Possiamo ipotizzare che le cause dell'errore per i primi $10$ rimbalzi siano la maggiore
+    deformazione della pallina causata dalla velocità degli urti e il maggiore attrito
+    con l'aria a cui la pallina va incontro muovendosi a velocità maggiori lungo
+    traiettorie più lunghe.\\
     Per quanto riguarda i valori ottenuti per le altezze iniziali $h_0$ per il primo fit
     si è ottenuto un valore inferiore di quello misurato, anche se considerassimo
-    qualche centimetro di incertezza sulla nostra misura.
+    $\SI{5}{\cm}$ di incertezza sulla misura (molto superiore alla risoluzione strumentale
+    di $\SI{1}{\mm}$).
+    Per il secondo fit, secondo l'equazione \ref{eq:altezza_2}, l'altezza massima raggiunta prima
+    dell'undicesimo rimbalzo è $\SI{0.125\pm 0.002}{\meter}$, questa quantità
+    risulta incompatibile con quella ottenuta attraverso il fit che è decisamente inferiore.
 \end{document}
