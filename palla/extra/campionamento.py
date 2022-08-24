@@ -20,7 +20,7 @@ def sample_file(th, sep):
 
     Keyword arguments:
     th -- threshold to identify a datapoint
-    sep -- minimun separation bewtween datapoints, in seconds
+    sep -- minimun separation bewtween datapoints
     """
 
     start_point = 0
@@ -36,19 +36,19 @@ def sample_file(th, sep):
     for i in range(len(signal)):
         # Start sampling
         if abs(signal[i]) >= th and not sampling:
-            start_point = i
+            start_point = end_point = i
             sampling = sep
             peak = i
 
-        elif signal[i] >= th and sampling:
+        elif abs(signal[i]) >= th and sampling:
+            sampling = sep
             # Find new peak
             if abs(signal[i]) > abs(signal[peak]):
                 peak = i
 
         elif abs(signal[i]) < th and sampling > 1:
             sampling -= 1
-            if not end_point:
-                end_point = i-1
+            end_point = i - sep
 
         elif abs(signal[i]) < th and sampling == 1:
             sigmas.append((end_point-start_point)/(framerate*2))
@@ -64,8 +64,8 @@ def sample_file(th, sep):
 
 # Get parameters from cli
 threshold = int(sys.argv[2]) if len(sys.argv) > 2 else 10000
-separation = int(float(sys.argv[3]) * framerate) if len(sys.argv) > 3 else 8000
-num = int(sys.argv[4]) if len(sys.argv) > 4 else 0
+separation = int(sys.argv[3]) if len(sys.argv) > 3 else 200
+num = int(sys.argv[4]) if len(sys.argv) > 4 else 50
 
 
 samples, peaks, sigmas = sample_file(threshold, separation)
@@ -76,6 +76,7 @@ if num:
     sigmas = sigmas[:(num-len(sigmas))]
 
 sigma = max(sigmas)
+print("framerate: %d" % framerate)
 print("sigma = %f" % sigma)
 print("%d bounces found" % len(samples))
 

@@ -38,16 +38,17 @@
 
     \section{Misure ed Analisi}
     \subsection{Misurazione}
-    Vogliamo misurare i tempi analizzando una registrazione audio dei rimbalzi della pallina,
+    Vogliamo misurare i tempi analizzando una registrazione audio dei rimbalzi della pallina
+    (nel nostro caso una pallina da ping pong),
     quindi è necessario posizionare lo strumento di registrazione per terra vicino
     a dove faremo cadere la pallina e assicurarsi che l'ambiente sia sufficientemente silenzioso.
     Per poter conoscere il valore di $h_0$, abbiamo utilizzato un metro a nastro per
-    fare un segno su un muro ad un altezza conosciuta, e abbiamo poi lasciato cadere
+    fare un segno su un muro ad $\SI{1}{\meter}$ dal suolo, e abbiamo poi lasciato cadere
     la pallina dall'altezza del segno, assicurandoci di lasciare spazio a sufficienza per evitare
     che la palla si scontri con il muro o con lo strumento di misurazione.
     Abbiamo registrato il rumore dei rimbalzi della pallina avviando
     la registrazione poco prima di lasciar cadere la pallina e arrestandola subito dopo l'ultimo rimbalzo.
-    \begin{figure}[!htb]
+    \begin{figure}[ht!]
         \centering
         \includegraphics[width=0.8\textwidth]{extra/audio_rimbalzi.pdf}
         \caption{Grafico delle ampiezze della registrazione}
@@ -61,38 +62,98 @@
     ignorando la coda.\\
     Per effettuare il campionamento abbiamo scritto un programma in python che individua
     gli intervalli di tempo in cui l'ampiezza della traccia audio sale sopra ad un threshold
-    arbirtrario e per ciascuno restituisce la media dell'istante iniziale e dell'istante finale,
-    ovvero l'istante al centro del picco come detto inizialmente.
-    I dati così ottenuti sono riassunti nella seguente tabella:\\
-    \begin{table}[H]
+    arbitrario e per ciascun intervallo restituisce il punto centrale come istante d'impatto.
+    Come incertezza abbiamo utilizzato metà della durata del picco audio più lungo,
+    che risulta essere $\SI{0.002}{\second}$.\\
+    I dati così ottenuti sono riassunti nella tabella \ref{tab:rimbalzi}, oltre il
+    cinquantesimo rimbalzo diventa difficile distinguere i picchi perciò
+    non abbiamo campionato ulteriori impatti.
+    \begin{table}[ht!]
         \centering
-        \begin{tabular}{ll|ll}
-            Rimbalzo & Istante [\si{s}] & Rimbalzo & Istante [\si{s}]\\
+        \begin{tabular}{ll|ll|ll}
+            Rimbalzo & Istante [\si{s}] & Rimbalzo & Istante [\si{s}] & Rimbalzo & Istante [\si{s}]\\
             \hline
             \hline
-            1&4.415&11&9.330\\
-            2&5.180&12&9.638\\
-            3&5.845&13&9.928\\
-            4&6.430&14&10.200\\
-            5&6.955&15&10.458\\
-            6&7.433&16&10.702\\
-            7&7.871&17&10.933\\
-            8&8.275&18&11.152\\
-            9&8.651&19&11.360\\
-            10&9.002&20&11.558
+            1&2.604&18&9.191&35&11.365\\
+            2&3.366&19&9.385&36&11.441\\
+            3&4.022&20&9.568&37&11.523\\
+            4&4.600&21&9.738&38&11.581\\
+            5&5.119&22&9.900&39&11.647\\
+            6&5.591&23&10.054&40&11.708\\
+            7&6.025&24&10.198&41&11.767\\
+            8&6.423&25&10.336&42&11.822\\
+            9&6.791&26&10.465&43&11.875\\
+            10&7.133&27&10.588&44&11.925\\
+            11&7.452&28&10.703&45&11.972\\
+            12&7.750&29&10.813&46&12.018\\
+            13&8.030&30&10.918&47&12.060\\
+            14&8.292&31&11.017&48&12.100\\
+            15&8.538&32&11.111&49&12.138\\
+            16&8.769&33&11.201&50&12.175\\
+            17&8.986&34&11.285&
         \end{tabular}
-        \caption{Istanti di ciascun rimbalzo della pallina.}
+        \caption{Istanti di ciascun rimbalzo della pallina. L'incertezza è di $\SI{0.002}{\second}$.}
         \label{tab:rimbalzi}
     \end{table}
     \subsection{Elaborazione dei dati}
     Utilizzando le leggi della cinematica per corpi in moto uniformemente accelerato,
-    e ignorando quindi l'attrito dell'aria e altre perturbazioni, si può dimostrare la
+    e ignorando quindi l'attrito dell'aria ed altre perturbazioni, si può dimostrare la
     seguente formula:
     \begin{equation}
         \label{eq:altezza 2}
-        h_n=-\frac{1}{8}g\left( t_n-t_{n-1} \right) 
+        h_n=-\frac{1}{8}g\left( t_{n+1}-t_{n} \right) ^2
     \end{equation}
     che ci permette di calcolare le altezze a partire dai dati di cui disponiamo.\\
-    Abbiamo quindi fatto un grafico di disperzione di queste altezze ed abiamo fatto il
-    fit di questi dati utilizzando funzione curve\_fit di della libreria scipy
+    Abbiamo quindi fatto un grafico di disperzione ed un fit di questi dati utilizzando
+    la funzione curve\_fit della libreria scipy, il risultato è mostrato in figura \ref{fig:altezze}.
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{extra/altezza_rimbalzi.pdf}
+        \caption{Grafico di disperzione delle altezze massime di ciascun rimbalzo,
+        con best fit e grafico dei residui.}
+        \label{fig:altezze}
+    \end{figure}
+    Osservando il grafico dei residui ottenuto si nota che i punti che più si discostano
+    dal modello utilizzato sono i primi, ovvero i rimbalzi effettuati da un altezza 
+    notevolmente maggiore rispetto ai successivi.\\
+    Abbiamo quindi rietenuto opportuno eseguire un ulteriore fit ignorando i primi $10$ rimbalzi
+    per verificare se gli urti a velocità più moderate si adattassero meglio al modello
+    in considerazione, il risultato è mostrato in figura \ref{fig:altezze_2}.\\
+    Per entrambi i fit, i valori ottenuti per le altezze iniziali $h_0$,
+    il fattore $\gamma$ e le relative incertezze sono mostrati in tabella \ref{tab:fit}
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{extra/altezza_rimbalzi[10:].pdf}
+        \caption{Grafico di disperzione con fit degli ultimi 40 rimbalzi della pallina.}
+        \label{fig:altezze_2}
+    \end{figure}
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{ll|ll}
+            \multicolumn{2}{c|}{Fit su 50 rimbalzi} & \multicolumn{2}{c}{Fit su 40 rimbalzi} \\
+            \hline
+            \hline
+            $h_0$ [\si{\m}] & 0.627 & $h_0$ [\si{\m}] & 0.116\\
+            $\sigma_{h_0} [\si{\m}]$ & 0.024 & $\sigma_{h_0} [\si{\m}]$ & 0.001\\
+            $\gamma$ & 0.8634 & $\gamma$ & 0.8929\\
+            $\sigma_{\gamma}$ & 0.0036 & $\sigma_{\gamma}$ & 0.0007
+        \end{tabular}
+        \caption{Parametri ottenuti dai fit.}
+        \label{tab:fit}
+    \end{table}
+    \section{Conclusioni}
+    Osservando i due diversi fit eseguiti, si può subito notare che in generale il
+    modello esponenzionale non descrive adeguatamente il comportamento della pallina,
+    tuttavia considerando solo urti ad altezze e quindi velocità sufficientemente basse,
+    i dati si adattano molto bene al modello scelto. Per determinare, nel caso generale,
+    quale sia un altezza iniziale sufficientemente bassa da rendere trascurabile l'errore
+    commesso dal modello esponenziale sarebbe necessario studiare un modello più generale
+    che descriva più precisamente la perdita di energia della pallina e permetta quindi
+    di determinare l'errore commesso dal modello esponenziale.\\
+    Possiamo ipotizzare che le cause di questo errore siano la maggiore deformazione della
+    pallina causata dalla velocità degli urti e il maggiore attrito con l'aria a cui la 
+    pallina va incontro muovendosi a velocità maggiori lungo traiettorie più lunghe.\\
+    Per quanto riguarda i valori ottenuti per le altezze iniziali $h_0$ per il primo fit
+    si è ottenuto un valore inferiore di quello misurato, anche se considerassimo
+    qualche centimetro di incertezza sulla nostra misura.
 \end{document}

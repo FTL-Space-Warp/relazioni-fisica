@@ -30,7 +30,7 @@ res = y - catenary(x, a_hat, c_hat, x0_hat)
 plt.errorbar(x, res, sigma_y, fmt="o", markersize=4)
 plt.grid(which="both", ls="dashed", color="gray")
 plt.xlabel("x [cm]")
-plt.ylabel("Residuai")
+plt.ylabel("Residui")
 plt.savefig("catenaria.pdf")
 
 plt.show()
