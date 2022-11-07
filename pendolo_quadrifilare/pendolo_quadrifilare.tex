@@ -1,5 +1,16 @@
 \documentclass{article}
+
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath, amssymb}
+
+\sisetup{uncertainty-mode=separate}
 
 \title{Relazione di Laboratorio 1 - Pendolo Quadrifilare}
 \author{Iallorenzi Michele - Wallout Francesco}
@@ -9,8 +20,15 @@
 \maketitle
 
 \section{Introduzione}
-    L'esperimento verte sullo studio del moto del pendolo quadrifilare. Questo pendolo è composto da x fili che sorreggono un pezzo di legno. Questi servono per mantenere il pendolo stabile, in modo che faccia le sue oscillazioni su un piano. Inoltre possiamo ...
-    Lo scopo dell'esperienza è studiare i moti del pendolo quando non siamo nel regime delle piccole oscillazioni, cercando di capire come varia il periodo del pendolo in funzione dell'angolo di oscillazione.
+    L'esperimento verte sullo studio del moto del Pendolo Quadrifilare al fine di dimostrare la validità della relazione predetta dalla teoria tra il periodo e l'ampiezza dell'angolo di oscillazione del pendolo. 
+    Per studiare questo fenomeno, "usciamo" dal regime delle piccole oscillazioni e posizioniamo il pendolo in modo da avere un moto più duraturo (nel tempo), con ampie oscillazioni.
+    Il pendolo è composto da 4 fili che sorreggono un pezzo di legno (agli spigoli del blocco), in questo modo la traiettoria del pendolo si sviluppa su un piano (avviene un moto piano) ed il pendolo sarà stabile.\\
+    Al di sotto del blocchetto, troviamo un pezzo di piombo, che serve ad aumentare il peso dell'oggetto e rendere quindi trascurabile l'attrito dell'aria ed altre possibili perturbazioni.\\
+    Una bandiera metallica attaccata al pendolo ottura una fotocellula ogni volta
+    che il pendolo raggiunge il punto più basso della sua traiettoria, questo permette
+    ad un calcolatore connesso alla fotocellula di misurare il periodo di otturazione e il
+    tempo di transito, ovvero il tempo per cui la fotocellula rimane coperta in ciascun
+    passaggio.
     
 \section{Esperienza}
 
@@ -22,39 +40,80 @@
     \end{itemize}
     
     \subsection{Misurazione}
-    Posizionare il grave ad un ampiezza abbastanza grande per permettere al pendolo di oscillare il più a lungo possibile, facendo selle oscillazioni uniformi. Appena parte il moto del pendolo, bisogna far partire il cronometro ed aspettare che la "bandiera" del pendolo (che serve a registrare la velocità ed il numero delle oscillazioni) non registri più nessun oscillazione.
+    Posizionare il grave ad un ampiezza abbastanza grande per permettere al pendolo di oscillare il più a lungo possibile. Appena parte il moto del pendolo, bisogna far partire il cronometro e poi fermarlo quando la bandiera del pendolo non registra più nessun oscillazione.
+    Prima di questo esperimento è necessario prendere queste misure: "lunghezza del filo" (distanza tra punto di sospensione e centro di massa) ($l$), larghezza della bandierina ($w$), distanza tra punto di sospensione ed estremo della bandierina ($d$).
     
-    \subsection{Calcoli}
-    Per calcolare l'ampiezza delle oscillazioni, assumiamo trascurabile l'attrito con l'aria e ricaviamoci la relazione energetica fondamentale:
+    
+\section{Elaborazione dati}
+
+    \subsection{Velocità del Pendolo}
+    Sappiamo che la velocità di un qualsiasi pendolo (reale) diminuisce nel tempo. Immaginiamo quindi che ci sia uno smorzamento della velocità che varia sicuramente nel tempo, ma come varia la funzione velocità in funzione del tempo? 
+    Per scoprirlo facciamo un grafico che rappresenti le velocità in funzione del tempo e per ottenere la velocità del pendolo utilizziamo questa relazione:
+    \begin{equation}\label{eq:velocità}
+        v = \frac{w l}{t_T d}
+    \end{equation}
+    ($t_T$ è il tempo di transito della bandierina nel punto di massima velocità)
+    Otterremo il grafico in figura \ref{fig:pendolo_quadrifilare_velocità}.\\
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{extra/pendolo_quadrifilare_velocità.pdf}
+        \caption{Grafico delle velocità massime di ciascun oscillazione in funzione del
+        tempo trascorso.}
+        \label{fig:pendolo_quadrifilare_velocità}
+    \end{figure}
+    Grazie alla scala semilogaritmica, notiamo subito che i dati sembrano disporsi approssimativamente secondo una legge esponenziale, quindi cerchiamo una relazione che sarà del tipo:
+    \begin{equation}
+            v(t) = v_0 e^{-\lambda t}
+    \end{equation}
+    Come valore per il parametro $v_0$ utilizziamo semplicemente il primo valore ottenuto tramite l'equazione \ref{eq:velocità}.
+    Per trovare il valore $\lambda$ eseguiamo un fit dei minimi quadrati utilizzando
+    la funzione curve\_fit di scipy, in questo modo troveremo un certo valore di $\lambda$,
+    da cui possiamo inoltre ottenere il tempo di smorzamento $\tau = \frac{1}{\lambda}$.\\
+    Il fit ottenuto è mostrato in figura \ref{fig:pendolo_quadrifilare_velocità}.
+    \begin{gather*}
+        v_0 = \SI{0.740 \pm 0.002}{\m\per\s} \\
+        \lambda = \SI{0.0020468 \pm 0.0000009}{\Hz}  \\
+        \tau \pm \sigma_{\tau}= \frac{1}{\lambda}\pm \frac{\sigma_{\lambda}}{\lambda^2}=\\
+        =\SI{488.5\pm 0.2}{\s}
+    \end{gather*}
+
+
+
+    \subsection{Periodo del pendolo}
+    Per calcolare l'ampiezza delle oscillazioni, assumiamo trascurabile l'attrito con l'aria e ricaviamoci la relazione energetica:
     \begin{equation}
         mgl(1-cos\theta_0) = \frac{1}{2}m v_0^2
     \end{equation}
-    ovvero che l'energia potenziale nel punto di massima altezza è la stessa energia (cinetica) nel punto di massima velocità. Si ricava che:
-    \begin{equation}
-        \theta_0 = arccos(1 -\frac{v_0^2}{2gl})
-    \end{equation}.
-    Una volta ottenuto l'angolo, bisogna inserirlo nell'equazione del periodo del pendolo, che si può sviluppare secondo un espansione del seno:
-    \begin{equation}\label{T}
-        T = 2 \pi \sqrt{\frac{l}{g}}(1 + \frac{1}{16}\theta_0^2 + \frac{11}{3072}\theta_0^2
-    \end{equation}.
-    Nel codice abbiamo inserito solamente il primo sviluppo ($\frac{1}{16}\theta_0^2$), cercando di fare un fit con una "sorta di parabola" (un po' più schiacciata rispetto alla classica $y=x^2$), ma quanti sviluppi ci servono per fare il fit e quanti se ne possono studiare? Se l'incertezza che viene misurata ad un determinato sviluppo $n$, è più piccola dell'incertezza misurata in quello sviluppo, allora si può dire che è sufficiente studiare la funzione T (nell'equazione \ref{T}) allo sviluppo $n$-esimo.
-    ...
-    Sappiamo che la velocità di un qualsiasi pendolo reale, diminuisce nel tempo, quindi presenta uno smorzamento esponenziale secondo questa funzione:
-    \begin{equation}
-        v(t) = v_0(0) e^{-\lambda t}
-    \end{equation}.
-    Più avanti vedremo come calcolare il tempo di smorzamento $\tau = \frac{1}{\lambda}$
-    
-\section{Elaborazione dei dati}
-    
-    \subsection{Grafico}
-    Il grafico della funzione velocità, considerando il parametro velocità iniziale, si descrive attraverso una curva esponenziale. Facendo un fit con le misure prese in laboratorio, abbiamo ottenuto questo grafico:
-    ...
-    Il $\chi^2$ di questo grafico è ...
-    
-    Il modello del periodo, in funzione dell'angolo di oscillazione, verrebbe una parabola del secondo grado (in accordo con le considerazioni sull'ordine degli sviluppi del seno). Il risultato è:
-    ...
-    
-\section{Conclusioni}
+    ottenuta uguagliando l'Energia Potenziale nel punto di massima altezza e l'Energia Cinetica nel punto di massima velocità per il Teorema della Conservazione dell'Energia Meccanica (ovviamente le forze in gioco sono tutte conservative e quelle non conservative fanno lavoro nullo). Si ricava che:
+    \begin{equation}\label{eq:ampiezza}
+        \theta_0 = \arccos\left(1 -\frac{v_0^2}{2gl}\right)
+    \end{equation}
+    Sappiamo che è possibile fare uno sviluppo in serie di Taylor del periodo del pendolo, ottenendo il seguente risultato:
+    \begin{equation}\label{eq:T}
+        T = 2 \pi \sqrt{\frac{l}{g}}\left(1 + \frac{1}{16}\theta_0^2 + \frac{11}{3072}\theta_0^4 + ...\right)
+    \end{equation}
+    Nel codice e nelle formule useremo solamente il secondo ordine di questo sviluppo e verificheremo
+    quindi la validità di questa approssimazione.\\
+    L'angolo $\theta$ è noto perché si ottiene dalla \ref{eq:ampiezza}, che varia secondo la velocità e quest'ultima è nota per la \ref{eq:velocità}.\\
+    Possiamo inoltre ottenere un incertezza $\sigma_T$ per i periodi predetti
+    da questo modello attraverso la normale propagazione delle incertezze, conoscendo le
+    incertezze di misura su $l$, $d$ e $w$; risulta che il valore massimo di $\sigma_T$ è $\SI{0.03}{\s}$\\
+    Abbiamo quindi sovrapposto i grafici delle misure di $T$ ottenute in laboratorio e di
+    quelle previste dalla \ref{eq:T}, il risultato è mostrato in figura \ref{fig:pendolo_quadrifilare_periodo}
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.8\textwidth]{extra/pendolo_quadrifilare_periodo.pdf}
+        \caption{Grafici dei valori di $T$ previsti dalla teoria e misurati in laboratiorio}
+        \label{fig:pendolo_quadrifilare_periodo}
+    \end{figure}
+    \section{Conclusioni}
+    Il fit ottenuto mostrato in figura \ref{fig:pendolo_quadrifilare_velocità} si dimostra
+    insoddisfacente dato l'elevato valore del $\chi^2$, possiamo quindi affermare che
+    lo smorzamento del pendolo, almeno sul lungo periodo analizzato, non segue un modello
+    esponenziale e che quindi i valori ottenuti per $\lambda$ e $\tau$ non sono fisicamente
+    sensati.\\
+    Per quanto riguarda i periodi in funzione delle ampiezze, invece, il grafico 
+    \ref{fig:pendolo_quadrifilare_periodo} mostra come il modello matematico è molto
+    vicino ai valori sperimentali relativamente all'incertezza di misura.
 
 \end{document}
